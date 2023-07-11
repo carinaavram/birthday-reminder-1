@@ -33,7 +33,6 @@ export async function GET(req, res) {
           month: 'short',
           day: 'numeric',
         });
-        const unsubscribeUrl = `/birthdays/set-notifications`;
         const msg = {
           to: user.email,
           from: process.env.MY_EMAIL,
@@ -61,7 +60,6 @@ export async function GET(req, res) {
               <p>Just a reminder that ${birthday.name}'s birthday is coming up on ${formattedDate}.</p>
               <p>Don't forget to wish ${birthday.name} a happy birthday!</p>
               <p>Here are some gift ideas: ${birthday.gifts.join(',')}.</p>
-              <p>If you no longer wish to receive these reminder emails, you can <a href="${unsubscribeUrl}">unsubscribe here</a>.</p>
             </body>
           </html>
         `,
