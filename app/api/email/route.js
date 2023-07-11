@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { addDays} from 'date-fns';
+import { addDays } from 'date-fns';
 import dbConnect from '@/config/dbConnect';
 import User from '@/models/user';
 import Birthday from '@/models/birthday';
@@ -7,8 +7,7 @@ import sendgrid from '@sendgrid/mail';
 
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
-
-export async function GET(req, res) {
+async function handler(req, res) {
   try {
     dbConnect();
     const users = await User.find();
@@ -17,15 +16,17 @@ export async function GET(req, res) {
         continue;
       }
 
-      const birthdays = await Birthday.find({email: user.email})
+      const birthdays = await Birthday.find({ email: user.email });
       for (const birthday of birthdays) {
-        const birthdayDate = new Date (birthday.date);
+        const birthdayDate = new Date(birthday.date);
         const notificationDate = addDays(birthdayDate, -user.notificationDays);
-        notificationDate.setUTCHours(6,0,0,0);
+        notificationDate.setUTCHours(6, 0, 0, 0);
         const today = new Date();
-        today.setUTCHours(6,0,0,0);
-        if (today.getDate() !== notificationDate.getDate() ||
-        today.getMonth() !== notificationDate.getMonth()) {
+        today.setUTCHours(6, 0, 0, 0);
+        if (
+          today.getDate() !== notificationDate.getDate() ||
+          today.getMonth() !== notificationDate.getMonth()
+        ) {
           continue;
         }
         const formattedDate = birthdayDate.toLocaleDateString('en-US', {
@@ -66,10 +67,12 @@ export async function GET(req, res) {
         //   </html>
         // `,
         // }
-        await sendgrid.send({to: user.email,
-          from: process.env.MY_EMAIL,
-          subject: `Birthday Reminder: ${birthday.name}'s birthday is coming up!`,
-          html: `
+        await sendgrid.send(
+          {
+            to: user.email,
+            from: process.env.MY_EMAIL,
+            subject: `Birthday Reminder: ${birthday.name}'s birthday is coming up!`,
+            html: `
           <html>
             <head>
               <style>
@@ -89,19 +92,23 @@ export async function GET(req, res) {
             </head>
             <body>
               <h1>Dear ${user.name},</h1>
-              <p>Just a reminder that ${birthday.name}'s birthday is coming up on ${formattedDate}.</p>
+              <p>Just a reminder that ${
+                birthday.name
+              }'s birthday is coming up on ${formattedDate}.</p>
               <p>Don't forget to wish ${birthday.name} a happy birthday!</p>
               <p>Here are some gift ideas: ${birthday.gifts.join(',')}.</p>
             </body>
           </html>
-        `,} , function(error, info) {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log('Email sent ' + info);
+        `,
+          },
+          function (error, info) {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent ' + info);
+            }
           }
-        });
-        
+        );
       }
     }
     // Email sent successfully
@@ -111,3 +118,4 @@ export async function GET(req, res) {
     return new NextResponse('Failed to send email', { status: 500 });
   }
 }
+export { handler as GET };
