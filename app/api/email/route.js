@@ -63,7 +63,7 @@ export async function GET(req, res) {
         `,
         }
 
-        email.sendMail({ msg }, function (error, info) {
+        email.sendMail(msg , function (error, info) {
           if (error) {
             console.log(error);
           } else {
