@@ -15,14 +15,12 @@ export async function GET(req, res) {
       }
 
       const birthdays = await Birthday.find({email: user.email})
-      console.log(birthdays);
       for (const birthday of birthdays) {
         const birthdayDate = new Date (birthday.date);
         const notificationDate = addDays(birthdayDate, -user.notificationDays);
         notificationDate.setUTCHours(6,0,0,0);
         const today = new Date();
         today.setUTCHours(6,0,0,0);
-        console.log(notificationDate, today);
         if (today.getDate() !== notificationDate.getDate() ||
         today.getMonth() !== notificationDate.getMonth()) {
           continue;
