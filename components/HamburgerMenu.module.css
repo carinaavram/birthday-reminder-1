@@ -1,0 +1,132 @@
+.menuContainer {
+  position: relative;
+  width: max-content;
+}
+
+.hamburgerIcon {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.hamburgerIcon.active .bar:nth-child(1) {
+  transform: rotate(-45deg) translate(-4px, 6px);
+}
+
+.hamburgerIcon.active .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburgerIcon.active .bar:nth-child(3) {
+  transform: rotate(45deg) translate(-4px, -6px);
+}
+
+.bar {
+  width: 100%;
+  height: 2px;
+  background-color: whitesmoke;
+  transition: transform 0.3s ease-in-out;
+}
+
+.menuItems {
+  width: max-content;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  position: absolute;
+  right: -800px; /* Move the menu off the screen initially */
+  top: -10px;
+  padding: 10px;
+  background-color: transparent;
+  opacity: 0; /* Hide the menu initially */
+  transition: right 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Add transitions */
+}
+
+.menuContainer.open .menuItems {
+  right: 35px; /* Slide the menu into the navbar */
+  opacity: 1; /* Show the menu */
+  transition: right 0.3s ease-in-out, opacity 0.1s ease-in-out;
+}
+
+.menuContainer.open .menuItems .item {
+  opacity: 1; /* Show the menu items */
+  transition: opacity 0.3s ease-in-out; /* Add transition for opacity */
+}
+
+.item {
+  list-style: none;
+  margin: 0 10px;
+  opacity: 0;
+}
+
+.linkItem {
+  text-decoration: none;
+  color: whitesmoke;
+}
+
+.linkItem:hover {
+  text-decoration: underline;
+}
+
+.buttonItem {
+  background-color: transparent;
+  border: none;
+  color: whitesmoke;
+  display: inline-block;
+  cursor: pointer;
+  font-family: var(--font-ysabeau);
+  font-size: 18px;
+}
+
+.buttonItem:hover {
+  text-decoration: underline;
+}
+
+.active {
+  text-decoration: underline;
+}
+
+@media only screen and (max-width: 975px) {
+  .menuItems {
+    display: inline-block;
+    width: max-content;
+    height: max-content;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    /* right: 0; Move the menu off the screen initially */
+    top: 40px;
+    left: -20px;
+    background: rgba(248,116,116);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+    border-radius: 14px;
+    z-index: 999;
+    opacity: 0; /* Hide the menu initially */
+    transition: right 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Add transitions */
+  }
+  
+  .menuContainer.open .menuItems {
+    opacity: 1; /* Show the menu */
+    transition: right 0.3s ease-in-out, opacity 0.1s ease-in-out;
+  }
+  
+  .menuContainer.open .menuItems .item {
+    opacity: 1; /* Show the menu items */
+    transition: opacity 0.3s ease-in-out;
+  }
+  .item {
+    border: 2px solid whitesmoke;
+    border-radius: 8px;
+    padding: 3px;
+    margin: 3px 0;
+    text-align: center;
+  }
+  .linkItem, .buttonItem {
+    margin: auto;
+    color: whitesmoke;
+  }
+}

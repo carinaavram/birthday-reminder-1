@@ -1,5 +1,9 @@
-import { useSession, signOut } from 'next-auth/react';
+'use client';
+
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 import classes from './Header.module.css';
+import HamburgerMenu from './HamburgerMenu';
 
 const birthdayCake = (
   <svg
@@ -13,7 +17,7 @@ const birthdayCake = (
 );
 
 const Header = () => {
-  const { data } = useSession();
+  const session = useSession();
 
   return (
     <nav className={classes.navbar}>
@@ -22,15 +26,21 @@ const Header = () => {
         <h1>Birthday Reminder</h1>
       </div>
       <div className={classes.userSelection}>
-        {data?.user ? (
-          <>
-            <span className={classes.greeting}>Hi, {data?.user.name}</span>
-            <span className={classes.link}>
-              {' '}
-              <button type='button' onClick={() => signOut()}>Logout</button>
-            </span>
-          </>
-        ): ''}
+        {session.status === 'authenticated' ? (
+          <div className={classes.greetings}>
+            <HamburgerMenu />
+            <Link href="/profile">
+              <div className={classes.userCircle}>{session.data.user.name}</div>
+            </Link>
+          </div>
+        ) : (
+          <div className={classes.greetings}>
+            <Link href="/login" className={classes.link}>
+              <span className={classes.icon}>&#10148;</span>
+              Sign In
+            </Link>
+          </div>
+        )}
       </div>
     </nav>
   );

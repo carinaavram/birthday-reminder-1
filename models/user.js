@@ -1,38 +1,47 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
-
-const userSchema = new mongoose.Schema({
+ const userSchema = new mongoose.Schema({
   name: {
     type: String,
+    required: true, 
   },
   email: {
     type: String,
-    lowercase: true
-    // validate: {
-    //   validator: function(v) {
-    //     return /\S+@\S+\.\S+/.test(v);
-    //   },
-    //   message: props => `${props.value} is not a valid email address!`
-    // }
+    lowercase: true,
+    required: true,
+    validate: {
+      validator: function(v) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+      },
+      message: props => `${props.value} is not a valid email address!`
+    }
   },
   password: {
     type: String,
-    // validate: {
-    //   validator: function(v) {
-    //     return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(v);
-    //   },
-    //   message: props => 'Password must contain at least one uppercase letter, one lowercase letter, and one number'
-    // }
+    required: true,
+    validate: {
+      validator: function(v) {
+        return v.length >= 8;
+      },
+      message: 'Password must be at least 8 characters long'
+    }
+  },
+  birthdays: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Birthday",
+  }],
+  notificationDays: {
+    type: Number,
+    default: 1,
+  },
+  receiveEmailNotification: {
+    type: Boolean,
+    default: true,
   }
-});
-
-userSchema.pre('save', async function (next) {
-  //this represnts the user
-  if (!this.isModified('password')) {
-    next();
-  }
+}, {timestamps: true});
+ userSchema.pre('save', async function (next) {
+  //this represents the user
   this.password = await bcrypt.hash(this.password, 10);
+  next();
 });
-
-export default mongoose.models.User || mongoose.model('User', userSchema);
-
+ export default mongoose.models?.User || mongoose.model('User', userSchema);

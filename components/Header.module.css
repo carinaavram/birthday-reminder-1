@@ -1,0 +1,63 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #187498;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  border-radius: 14px;
+  color: whitesmoke;
+
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  fill: whitesmoke;
+}
+
+.icon {
+  margin-right: 5px;
+}
+
+.userSelection {
+  display: flex;
+  justify-content: space-between;
+}
+
+.userCircle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width:auto;
+  padding: 15px;
+  border-radius: 50%;
+  background-color: rgba(248, 116, 116);
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 10px;
+  margin-left: 15px;
+}
+
+.greetings {
+  display: flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 5px 10px;
+  background-color: #F87474;
+  font-weight: bold;
+  border-radius: 14px;
+  margin: 4px;
+}
+
+.link:hover{
+  background-color: #999;
+}

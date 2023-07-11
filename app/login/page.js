@@ -7,23 +7,43 @@ import { signIn } from 'next-auth/react';
 import classes from '../styles/LoginPage.module.css';
 import { useRouter } from 'next/navigation';
 
-const Login = () => {
+const Login = (response) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const router = useRouter();
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
+    setError('');
+
+    // Validate email
+    if (!email) {
+      setError('Email is required');
+      return;
+    }
+
+    // Validate password
+    if (!password) {
+      setError('Password is required');
+      return;
+    }
+
     try {
-      await signIn('credentials', {
+      const response = await signIn('credentials', {
         redirect: false,
         email,
         password,
       });
-      router.push('/')
+      if (response.error) {
+        setError('Login failed. Please check your credentials and try again.');
+      } else {
+        router.push('/');
+      }
     } catch (error) {
       console.log(error);
+      setError('An error occurred during login. Please try again later.');
     }
   };
 
@@ -58,6 +78,8 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+
+            {error && <p className={classes.error}>{error}</p>}
 
             <button type="submit" className={classes.button}>
               Sign in

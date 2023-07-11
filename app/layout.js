@@ -1,12 +1,10 @@
-'use client';
-
-import Footer from './components/Footer';
-import Header from './components/Header';
-import { SessionProvider } from 'next-auth/react';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
+import AuthProvider from '../components/UI/AuthProvider';
 import './globals.css';
-import { Inter } from 'next/font/google';
+import { Ysabeau } from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'] });
+const ysabeau = Ysabeau({ subsets: ['latin'], variable: '--font-ysabeau' });
 
 export const metadata = {
   title: 'Birthday Reminder',
@@ -16,13 +14,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <SessionProvider>
+    <html lang="en" className={ysabeau.className}>
+      <body>
+        <AuthProvider>
           <Header />
           {children}
           <Footer />
-        </SessionProvider>
+        </AuthProvider>
       </body>
     </html>
   );
