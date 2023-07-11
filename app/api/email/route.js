@@ -5,7 +5,7 @@ import User from '@/models/user';
 import Birthday from '@/models/birthday';
 import email from '@/config/email';
 
-async function handler(req, res) {
+export async function GET(req, res) {
   try {
     dbConnect();
     const users = await User.find();
@@ -78,4 +78,3 @@ async function handler(req, res) {
     return new NextResponse('Failed to send email', { status: 500 });
   }
 }
-export {handler as GET};
