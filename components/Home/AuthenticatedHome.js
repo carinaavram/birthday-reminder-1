@@ -35,7 +35,7 @@ const AuthenticatedHome = () => {
       <div className={classes.imageContainer}>
         <img
           src="https://images.pexels.com/photos/2072181/pexels-photo-2072181.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-          alt="people celebrating"
+          alt="birthday card"
           width={800}
           height={800}
           className={classes.image}
