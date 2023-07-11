@@ -4,7 +4,7 @@ import AuthProvider from '../components/UI/AuthProvider';
 import './globals.css';
 import { Ysabeau } from 'next/font/google';
 
-const ysabeau = Ysabeau({ subsets: ['latin'], variable: '--font-ysabeau' });
+const ysabeau = Ysabeau({ subsets: ['latin'], variable: '--font-ysabeau', display:'swap' });
 
 export const metadata = {
   title: 'Birthday Reminder',

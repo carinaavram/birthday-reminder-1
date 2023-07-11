@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import classes from '@/app/styles/SetNotificationPage.module.css';
 import Loading from '@/app/loading';
 
-function setNotificationsPage() {
+function NotificationsPage() {
   const [notificationDays, setNotificationDays] = useState('');
   const [receiveEmailNotification, setReceiveEmailNotification] =
     useState(true);
@@ -121,4 +121,4 @@ function setNotificationsPage() {
   );
 }
 
-export default setNotificationsPage;
+export default NotificationsPage;
