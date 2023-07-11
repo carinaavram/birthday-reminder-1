@@ -3,7 +3,10 @@ import { addDays} from 'date-fns';
 import dbConnect from '@/config/dbConnect';
 import User from '@/models/user';
 import Birthday from '@/models/birthday';
-import email from '@/config/email';
+import sendgrid from '@sendgrid/mail';
+
+sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
+
 
 export async function GET(req, res) {
   try {
@@ -31,8 +34,39 @@ export async function GET(req, res) {
           month: 'short',
           day: 'numeric',
         });
-        const msg = {
-          to: user.email,
+
+        // const msg = {
+        //   to: user.email,
+        //   from: process.env.MY_EMAIL,
+        //   subject: `Birthday Reminder: ${birthday.name}'s birthday is coming up!`,
+        //   html: `
+        //   <html>
+        //     <head>
+        //       <style>
+        //         body {
+        //           font-family: Arial, sans-serif;
+        //           background-color: #whitesmoke;
+        //           color: #333;
+        //         }
+        //         h1 {
+        //           color: #ff5500;
+        //         }
+        //         p {
+        //           font-size: 16px;
+        //           line-height: 1.5;
+        //         }
+        //       </style>
+        //     </head>
+        //     <body>
+        //       <h1>Dear ${user.name},</h1>
+        //       <p>Just a reminder that ${birthday.name}'s birthday is coming up on ${formattedDate}.</p>
+        //       <p>Don't forget to wish ${birthday.name} a happy birthday!</p>
+        //       <p>Here are some gift ideas: ${birthday.gifts.join(',')}.</p>
+        //     </body>
+        //   </html>
+        // `,
+        // }
+        await sendgrid.send({to: user.email,
           from: process.env.MY_EMAIL,
           subject: `Birthday Reminder: ${birthday.name}'s birthday is coming up!`,
           html: `
@@ -60,14 +94,11 @@ export async function GET(req, res) {
               <p>Here are some gift ideas: ${birthday.gifts.join(',')}.</p>
             </body>
           </html>
-        `,
-        }
-
-        email.sendMail(msg , function (error, info) {
+        `,} , function(error, info) {
           if (error) {
             console.log(error);
           } else {
-            console.log('Email sent' + info.response);
+            console.log('Email sent ' + info);
           }
         });
         
