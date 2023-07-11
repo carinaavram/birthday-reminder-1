@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 
 const email = nodemailer.createTransport({
-    service: 'SendGrid',
+    host: 'smtp.sendgrid.net',
     port: 587,
     auth: {
         user: 'apikey',

@@ -63,7 +63,13 @@ export async function GET(req, res) {
         `,
         }
 
-        await email.sendMail(msg);
+        email.sendMail({ msg }, function (error, info) {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent' + info.response);
+          }
+        });
         
       }
     }
