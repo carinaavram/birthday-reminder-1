@@ -67,12 +67,11 @@ export async function GET(req, res) {
         //   </html>
         // `,
         // }
-        await sendgrid.send(
-          {
-            to: user.email,
-            from: process.env.MY_EMAIL,
-            subject: `Birthday Reminder: ${birthday.name}'s birthday is coming up!`,
-            html: `
+        await sendgrid.send({
+          to: user.email,
+          from: process.env.MY_EMAIL,
+          subject: `Birthday Reminder: ${birthday.name}'s birthday is coming up!`,
+          html: `
           <html>
             <head>
               <style>
@@ -100,16 +99,7 @@ export async function GET(req, res) {
             </body>
           </html>
         `,
-          },
-          function (error, info) {
-            if (error) {
-              console.log(error);
-            } else {
-              console.log('Email sent ' + info);
-            }
-          }
-        );
-        console.log('Email sent successfully for user:', user.email);
+        });
       }
     }
     // Email sent successfully
