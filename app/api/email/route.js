@@ -9,7 +9,7 @@ sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
 export async function GET(req, res) {
   try {
-    dbConnect();
+    await dbConnect();
     const users = await User.find();
     let emailSent = false;
     for (const user of users) {
