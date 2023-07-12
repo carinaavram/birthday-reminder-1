@@ -49,7 +49,7 @@ function NotificationsPage() {
 
     try {
       //Updating the notificationDays in the db
-      const response = await fetch('http://localhost:3000/api/notifications', {
+      const response = await fetch('/api/notifications', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
