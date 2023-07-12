@@ -7,7 +7,7 @@ import sendgrid from '@sendgrid/mail';
 
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
-async function handler(req, res) {
+export async function GET(req, res) {
   try {
     dbConnect();
     const users = await User.find();
@@ -118,4 +118,3 @@ async function handler(req, res) {
     return new NextResponse('Failed to send email', { status: 500 });
   }
 }
-export { handler as GET };
