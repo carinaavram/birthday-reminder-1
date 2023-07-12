@@ -6,7 +6,7 @@ import sendgrid from '@sendgrid/mail';
 
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
-async function handler(res, req) {
+async function handler(req, res) {
     try {
       dbConnect();
       const users = await User.find();
