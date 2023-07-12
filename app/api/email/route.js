@@ -11,7 +11,6 @@ export async function GET(req, res) {
   try {
     await dbConnect();
     const users = await User.find();
-    let emailSent = false;
     for (const user of users) {
       if (!user.receiveEmailNotification) {
         continue;
@@ -70,16 +69,12 @@ export async function GET(req, res) {
           </html>
         `,
         });
-        emailSent = true;
       }
     }
     // Email sent successfully
-    if (emailSent) {
-      return new NextResponse(JSON.stringify({ message: 'Email sent successfully!', status: 200 }));
-    } else {
-      return new NextResponse(JSON.stringify({ message: 'No emails sent.', status: 200 }));
-    }
-   
+    return new NextResponse(
+      JSON.stringify({ message: 'Email sent successfully!', status: 200 })
+    );
   } catch (error) {
     console.error('Error sending emails:', error);
     // Handle errors
