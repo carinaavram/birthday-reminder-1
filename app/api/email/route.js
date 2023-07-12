@@ -69,10 +69,11 @@ export async function GET(req, res) {
           </html>
         `,
         });
+        return new NextResponse(JSON.stringify({message:'Email sent succesfully!', status: 200 }));
       }
     }
     // Email sent successfully
-    return new NextResponse(JSON.stringify({message:'Email sent succesfully!', status: 200 }));
+   
   } catch (error) {
     console.error('Error sending emails:', error);
     // Handle errors
