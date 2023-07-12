@@ -81,11 +81,11 @@ async function handler(req, res) {
         }
       }
       // Email sent successfully
-      return Response('Emails sent successfully!');
+      return new Response('Emails sent successfully!');
     } catch (error) {
       console.error('Error sending emails:', error);
       // Handle errors
-      return Response('Failed to send email');
+      return new Response('Failed to send email');
     }
   }
 export {handler as GET};
