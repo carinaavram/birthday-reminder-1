@@ -103,7 +103,7 @@ export async function GET(req, res) {
       }
     }
     // Email sent successfully
-    return new NextResponse('Email sent succesfully!', { status: 200 });
+    return new NextResponse(JSON.stringify({message:'Email sent succesfully!', status: 200 }));
   } catch (error) {
     console.error('Error sending emails:', error);
     // Handle errors
