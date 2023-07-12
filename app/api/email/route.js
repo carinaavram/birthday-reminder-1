@@ -109,11 +109,13 @@ export async function GET(req, res) {
             }
           }
         );
+        console.log('Email sent successfully for user:', user.email);
       }
     }
     // Email sent successfully
-    return new NextResponse('Emails sent succesfully', { status: 200 });
+    return new NextResponse.json('Email sent succesfully!', { status: 200 });
   } catch (error) {
+    console.error('Error sending emails:', error);
     // Handle errors
     return new NextResponse('Failed to send email', { status: 500 });
   }
