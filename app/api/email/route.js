@@ -37,7 +37,7 @@ export async function GET(req, res) {
           day: 'numeric',
         });
 
-        sendgrid.send({
+        await sendgrid.send({
           to: user.email,
           from: process.env.MY_EMAIL,
           subject: `Birthday Reminder: ${birthday.name}'s birthday is coming up!`,
