@@ -3,10 +3,11 @@ import dbConnect from '@/config/dbConnect';
 import User from '@/models/user';
 import Birthday from '@/models/birthday';
 import sendgrid from '@sendgrid/mail';
+import { NextApiResponse } from 'next';
 
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
-async function handler(req, res) {
+async function handler(NextApiResponse) {
     try {
       dbConnect();
       const users = await User.find();
@@ -81,11 +82,11 @@ async function handler(req, res) {
         }
       }
       // Email sent successfully
-      res.status(200).json('Emails sent successfully!');
+      NextApiResponse.status(200).json('Emails sent successfully!');
     } catch (error) {
       console.error('Error sending emails:', error);
       // Handle errors
-      res.status(500).json('Failed to send email');
+      NextApiResponse.status(500).json('Failed to send email');
     }
   }
 export {handler as GET};
