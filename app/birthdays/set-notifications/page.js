@@ -29,10 +29,10 @@ function NotificationsPage() {
             setNotificationDays(notificationDays.toString());
             setReceiveEmailNotification(receiveEmailNotification);
           } else {
-            console.log('Failed to fetch notification settings');
+            throw new Error('Failed to fetch notification settings');
           }
         } catch (error) {
-          console.log(error);
+          throw new Error('Something went wrong');
         }
       };
 

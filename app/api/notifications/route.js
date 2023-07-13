@@ -13,16 +13,13 @@ const handler = async (req, res) => {
         await req.json();
       try {
         dbConnect();
-        const user = await User.findOne({ email: userEmail });
-
-        if (!user) {
-          return new NextResponse('User not found', { status: 404 });
-        }
-
-        user.notificationDays = notificationDays;
-        user.receiveEmailNotification = receiveEmailNotification;
-
-        await user.save();
+        const user = await User.findOneAndUpdate({ email: userEmail }, {
+          $set: {
+            notificationDays: notificationDays,
+            receiveEmailNotification: receiveEmailNotification
+          }
+        },
+        { new: true });
 
         return new NextResponse('Notifications days updated succesfully', {
           status: 200,
