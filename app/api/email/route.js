@@ -9,23 +9,20 @@ sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
 export async function GET(req, res) {
   try {
-    await dbConnect();
+    dbConnect();
     const users = await User.find();
     for (const user of users) {
       if (!user.receiveEmailNotification) {
         continue;
       }
-
       const birthdays = await Birthday.find({ email: user.email });
       for (const birthday of birthdays) {
-        const birthdayDate = new Date(birthday.date);
+        const birthdayDate = birthday.date;
         const notificationDate = addDays(birthdayDate, -user.notificationDays);
-        notificationDate.setUTCHours(6, 0, 0, 0);
         const today = new Date();
-        today.setUTCHours(6, 0, 0, 0);
         if (
-          today.getDate() !== notificationDate.getDate() ||
-          today.getMonth() !== notificationDate.getMonth()
+          today.getDate() !== notificationDate.getDate() + 1 ||
+          (today.getMonth() + 1) !== (notificationDate.getMonth() + 1)
         ) {
           continue;
         }
@@ -36,6 +33,7 @@ export async function GET(req, res) {
           day: 'numeric',
         });
 
+        
         await sendgrid.send({
           to: user.email,
           from: process.env.MY_EMAIL,
