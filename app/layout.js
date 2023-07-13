@@ -9,7 +9,7 @@ const ysabeau = Ysabeau({ subsets: ['latin'], variable: '--font-ysabeau', displa
 export const metadata = {
   title: 'Birthday Reminder',
   description:
-    'Everyone struggles to remember birthdays, but this app will help you by sending notifications straight to your email when a birthday is coming up',
+    'The Birthday Reminder app is designed to help you never forget a birthday again. With this app, you can easily manage a list of birthdays and receive convenient email notifications as reminders when a birthday is approaching.',
 };
 
 export default function RootLayout({ children }) {
