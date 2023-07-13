@@ -39,8 +39,8 @@ const handler = NextAuth({
       id: 'credentials',
       name: 'Credentials',
       async authorize(credentials, req) {
-        dbConnect();
         try {
+          dbConnect();
           // Validate and sanitize user input
           const sanitizedCredentials = validateAndSanitizeInput(credentials);
           const { email, password } = sanitizedCredentials;

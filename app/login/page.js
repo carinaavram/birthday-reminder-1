@@ -32,11 +32,10 @@ const Login = () => {
 
     try {
       const response = await signIn('credentials', {
-        redirect: false,
         email,
         password,
       });
-      if (!response.ok) {
+      if (response.error) {
         setError('Login failed. Please check your credentials and try again.');
       } else {
         router.push('/');
