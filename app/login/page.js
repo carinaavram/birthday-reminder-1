@@ -7,7 +7,7 @@ import { signIn } from 'next-auth/react';
 import classes from '../styles/LoginPage.module.css';
 import { useRouter } from 'next/navigation';
 
-const Login = (response) => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -36,7 +36,7 @@ const Login = (response) => {
         email,
         password,
       });
-      if (response.error) {
+      if (!response.ok) {
         setError('Login failed. Please check your credentials and try again.');
       } else {
         router.push('/');

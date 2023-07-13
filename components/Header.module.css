@@ -15,6 +15,10 @@
   align-items: center;
   fill: whitesmoke;
 }
+.logo a {
+  font-size: 30px;
+  font-weight: bold;
+}
 
 .icon {
   margin-right: 5px;

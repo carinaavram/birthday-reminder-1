@@ -23,7 +23,7 @@ const Header = () => {
     <nav className={classes.navbar}>
       <div className={classes.logo}>
         {birthdayCake}
-        <h1>Birthday Reminder</h1>
+        <Link href='/'>Birthday Reminder</Link>
       </div>
       <div className={classes.userSelection}>
         {session.status === 'authenticated' ? (

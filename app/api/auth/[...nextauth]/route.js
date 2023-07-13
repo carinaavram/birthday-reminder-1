@@ -4,6 +4,12 @@ import bcrypt from 'bcryptjs';
 import dbConnect from '@/config/dbConnect';
 import NextAuth from 'next-auth/next';
 
+// Function to validate email format
+const validateEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
 // Function to validate and sanitize user input
 const validateAndSanitizeInput = (input) => {
   const { email, password } = input;
@@ -21,12 +27,6 @@ const validateAndSanitizeInput = (input) => {
     password: password.trim(),
   };
   return sanitizedInput;
-};
-
-// Function to validate email format
-const validateEmail = (email) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
 };
 
 const handler = NextAuth({
@@ -52,7 +52,6 @@ const handler = NextAuth({
             );
             if (isPasswordMatched) {
               return {
-                userId: user._id,
                 name: user.name,
                 email: user.email,
               };
@@ -63,7 +62,6 @@ const handler = NextAuth({
             throw new Error('Invalid Email or Password');
           }
         } catch (error) {
-          console.error(error);
           throw new Error('An error occurred');
         }
       },
@@ -72,7 +70,6 @@ const handler = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.userId = user.userId;
         token.name = user.name;
         token.email = user.email;
       }
@@ -80,7 +77,6 @@ const handler = NextAuth({
     },
     async session({ session, token, user }) {
       session.user = {
-        userId: token.userId,
         name: token.name,
         email: token.email,
       };

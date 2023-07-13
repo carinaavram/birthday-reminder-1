@@ -2,6 +2,10 @@ import User from '@/models/user';
 import dbConnect from '@/config/dbConnect';
 import { NextResponse } from 'next/server';
 
+const validateEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
 
 const validateAndSanitizeInput = (input) => {
   const { name, email, password } = input;
@@ -25,12 +29,6 @@ const validateAndSanitizeInput = (input) => {
   };
   return sanitizedInput;
 };
-
-const validateEmail = (email) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-};
-
 
 export const POST = async (req) => {
   try {
