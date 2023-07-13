@@ -21,7 +21,7 @@ export async function GET(req, res) {
         const notificationDate = addDays(birthdayDate, -user.notificationDays);
         const today = new Date();
         if (
-          today.getDate() !== notificationDate.getDate() + 1 ||
+          today.getDate() !== notificationDate.getDate() ||
           (today.getMonth() + 1) !== (notificationDate.getMonth() + 1)
         ) {
           continue;
