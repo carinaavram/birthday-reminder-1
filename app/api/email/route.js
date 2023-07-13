@@ -12,36 +12,25 @@ async function getEmailData() {
   const emailData = [];
   dbConnect();
   const users = await User.find();
-  console.log(users);
   for (const user of users) {
     const birthdays = await Birthday.find({ email: user.email });
-    console.log(birthdays);
     for (const birthday of birthdays) {
       const birthdayDate = new Date(birthday.date);
-      const notificationDate = addDays(birthdayDate, -user.notificationDays);
-      const today = new Date();
+      const formattedDate = birthdayDate.toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      });
 
-      if (
-        today.getDate() === (notificationDate.getDate() + 1) &&
-        (today.getMonth() + 1) === (notificationDate.getMonth() + 1)
-      ) {
-        const formattedDate = birthdayDate.toLocaleDateString('en-US', {
-          weekday: 'long',
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric',
-        });
-
-        const data = {
-          birthdayName: birthday.name,
-          birthdayDate: formattedDate,
-          gifts: birthday.gifts,
-          userName: user.name,
-          userEmail: user.email,
-        };
-
-        emailData.push(data);
-      }
+      const data = {
+        birthdayName: birthday.name,
+        birthdayDate: formattedDate,
+        gifts: birthday.gifts,
+        userName: user.name,
+        userEmail: user.email,
+      };
+      emailData.push(data);
     }
   }
   return emailData;
@@ -82,7 +71,6 @@ async function sendEmails(emailData) {
         </html>
       `,
     });
-    console.log(`Email sent to ${userEmail}`);
   }
 }
 
@@ -90,7 +78,7 @@ export async function GET(req, res) {
   try {
     const emailData = await getEmailData();
     await sendEmails(emailData);
-    return new NextResponse('Emails sent successfully!', {status: 200 });
+    return new NextResponse('Emails sent successfully!', { status: 200 });
     // Emails sent successfully
   } catch (error) {
     console.error('Error sending emails:', error);
