@@ -22,7 +22,7 @@ async function getEmailData() {
       const today = new Date();
 
       if (
-        today.getDate() === notificationDate.getDate() &&
+        today.getDate() === (notificationDate.getDate() + 1) &&
         (today.getMonth() + 1) === (notificationDate.getMonth() + 1)
       ) {
         const formattedDate = birthdayDate.toLocaleDateString('en-US', {
@@ -48,51 +48,83 @@ async function getEmailData() {
 }
 
 // Function to send the email
-async function sendEmails(emailData) {
-  for (const data of emailData) {
-    const { birthdayName, birthdayDate, gifts, userName, userEmail } = data;
-    await sendgrid.send({
-      to: userEmail,
-      from: process.env.MY_EMAIL,
-      subject: `Birthday Reminder: ${birthdayName}'s birthday is coming up!`,
-      html: `
-        <html>
-          <head>
-            <style>
-              body {
-                font-family: Arial, sans-serif;
-                background-color: #whitesmoke;
-                color: #333;
-              }
-              h1 {
-                color: #ff5500;
-              }
-              p {
-                font-size: 16px;
-                line-height: 1.5;
-              }
-            </style>
-          </head>
-          <body>
-            <h1>Dear ${userName},</h1>
-            <p>Just a reminder that ${birthdayName}'s birthday is coming up on ${birthdayDate}.</p>
-            <p>Don't forget to wish ${birthdayName} a happy birthday!</p>
-            <p>Here are some gift ideas: ${gifts.join(',')}.</p>
-          </body>
-        </html>
-      `,
-    });
-    console.log(`Email sent to ${userEmail}`);
-  }
-}
+// async function sendEmails(emailData) {
+//   for (const data of emailData) {
+//     const { birthdayName, birthdayDate, gifts, userName, userEmail } = data;
+//     await sendgrid.send({
+//       to: userEmail,
+//       from: process.env.MY_EMAIL,
+//       subject: `Birthday Reminder: ${birthdayName}'s birthday is coming up!`,
+//       html: `
+//         <html>
+//           <head>
+//             <style>
+//               body {
+//                 font-family: Arial, sans-serif;
+//                 background-color: #whitesmoke;
+//                 color: #333;
+//               }
+//               h1 {
+//                 color: #ff5500;
+//               }
+//               p {
+//                 font-size: 16px;
+//                 line-height: 1.5;
+//               }
+//             </style>
+//           </head>
+//           <body>
+//             <h1>Dear ${userName},</h1>
+//             <p>Just a reminder that ${birthdayName}'s birthday is coming up on ${birthdayDate}.</p>
+//             <p>Don't forget to wish ${birthdayName} a happy birthday!</p>
+//             <p>Here are some gift ideas: ${gifts.join(',')}.</p>
+//           </body>
+//         </html>
+//       `,
+//     });
+//     console.log(`Email sent to ${userEmail}`);
+//   }
+// }
 
 export async function GET(req, res) {
   try {
     const emailData = await getEmailData();
-    await sendEmails(emailData);
-
-    // Emails sent successfully
+    for (const data of emailData) {
+      const { birthdayName, birthdayDate, gifts, userName, userEmail } = data;
+      await sendgrid.send({
+        to: userEmail,
+        from: process.env.MY_EMAIL,
+        subject: `Birthday Reminder: ${birthdayName}'s birthday is coming up!`,
+        html: `
+          <html>
+            <head>
+              <style>
+                body {
+                  font-family: Arial, sans-serif;
+                  background-color: #whitesmoke;
+                  color: #333;
+                }
+                h1 {
+                  color: #ff5500;
+                }
+                p {
+                  font-size: 16px;
+                  line-height: 1.5;
+                }
+              </style>
+            </head>
+            <body>
+              <h1>Dear ${userName},</h1>
+              <p>Just a reminder that ${birthdayName}'s birthday is coming up on ${birthdayDate}.</p>
+              <p>Don't forget to wish ${birthdayName} a happy birthday!</p>
+              <p>Here are some gift ideas: ${gifts.join(',')}.</p>
+            </body>
+          </html>
+        `,
+      });
+    }
     return new NextResponse('Emails sent successfully!', {status: 200 });
+    // Emails sent successfully
   } catch (error) {
     console.error('Error sending emails:', error);
     // Handle errors
