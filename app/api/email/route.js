@@ -76,10 +76,26 @@ async function sendEmails(emailData) {
 
 export async function GET(req, res) {
   try {
-    const emailData = await getEmailData();
+    const emailDataPromise = getEmailData();
+    const timeoutPromise = new Promise((resolve) =>
+      setTimeout(resolve, 10000, null) // Resolves the promise after 10 seconds
+    );
+
+    const emailData = await Promise.race([emailDataPromise, timeoutPromise]);
+
+    if (!emailData) {
+      console.log('Timeout occurred');
+      return new NextResponse(
+        JSON.stringify({ message: 'Timeout occurred', status: 500 })
+      );
+    }
+
     await sendEmails(emailData);
-    return new NextResponse('Emails sent successfully!', { status: 200 });
+
     // Emails sent successfully
+    return new NextResponse(
+      JSON.stringify({ message: 'Emails sent successfully!', status: 200 })
+    );
   } catch (error) {
     console.error('Error sending emails:', error);
     // Handle errors
