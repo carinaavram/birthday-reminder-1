@@ -89,18 +89,24 @@ export async function GET(req, res) {
     //   );
     // }
 
-    const response = await sendgrid.send({
-      to: 'carinaavram97@gmail.com',
-      from: process.env.MY_EMAIL,
-      subject: 'Test Email',
-      html: '<h1>This is a test</h1>'
-    });
-
-    if(response.ok) {
-      // Emails sent successfully
-    return new NextResponse('Success', {status: 200 })
-    } else {
-      // Handle errors
-    return new NextResponse('Failed to send emails', { status: 500 });
+    try{
+      const response = await sendgrid.send({
+        to: 'carinaavram97@gmail.com',
+        from: process.env.MY_EMAIL,
+        subject: 'Test Email',
+        html: '<h1>This is a test</h1>'
+      });
+  
+      if(response.ok) {
+        // Emails sent successfully
+      return new NextResponse('Success', {status: 200 })
+      } else {
+        // Handle errors
+      return new NextResponse('Failed to send emails', { status: 500 });
+      }
+    } catch(error){
+      return new NextResponse('Failed to sent emails!', error);
     }
+
+    
 }
