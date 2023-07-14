@@ -88,13 +88,17 @@ async function handler(req, res) {
   //     JSON.stringify({ message: 'Timeout occurred', status: 500 })
   //   );
   // }
-  await sendgrid.send({
+  const response = await sendgrid.send({
     to: 'carinaavram97@gmail.com',
     from: process.env.MY_EMAIL,
     subject: 'Test Email',
     html: '<h1>This is a test</h1>',
   });
-  new Response ('success');
+  if (!response.ok){
+    return new NextResponse('Failed to send emails', {status: 500});
+  } else {
+    return new NextResponse('Emails sent succesfully', {status: 200})
+  }
 }
 
 export {handler as GET};
