@@ -28,26 +28,21 @@ async function handler(req, res) {
 
       try {
         dbConnect();
-        const user = await User.findOne({ email: userEmail });
-
-        if (!user) {
-          return new NextResponse('User not found', { status: 404 });
-        }
-
-        // Update the user fields
+        const updateData = {};
         if (updatedFields.name) {
-          user.name = updatedFields.name;
+          updateData.name = updatedFields.name;
         }
         if (updatedFields.email) {
-          user.email = updatedFields.email;
+          updateData.email = updatedFields.email;
         }
         if (updatedFields.password) {
-          // Hash the new password
-          user.password = updatedFields.password;
+          updateData.password = updatedFields.password;
         }
-
-        await user.save();
-
+        await User.findOneAndUpdate(
+          { email: userEmail },
+          { $set: updateData },
+          { new: true }
+        );
         return new NextResponse('User updated successfully', { status: 200 });
       } catch (error) {
         return new NextResponse('Database Error', { status: 500 });
