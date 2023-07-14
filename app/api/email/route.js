@@ -94,7 +94,7 @@ async function handler(req, res) {
     subject: 'Test Email',
     html: '<h1>This is a test</h1>',
   });
-  new NextResponse('success', {status: 200});
+  new Response ('success');
 }
 
 export {handler as GET};
