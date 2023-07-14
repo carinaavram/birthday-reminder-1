@@ -96,7 +96,7 @@ export async function GET(req, res) {
         subject: 'Test Email',
         html: '<h1>This is a test</h1>'
       });
-      return new NextResponse('Success', { status: 500 });
+      return new NextResponse('Success', { status: 200 });
     } catch(error){
       return new NextResponse('Failed to sent emails!', error);
     }
