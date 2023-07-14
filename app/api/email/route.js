@@ -98,9 +98,7 @@ export async function GET(req, res) {
     });
 
     // Emails sent successfully
-    return new NextResponse(
-      JSON.stringify({ message: 'Emails sent successfully!', status: 200 })
-    );
+    return new NextResponse('Emails sent successfully!', {status: 200 })
   } catch (error) {
     console.error('Error sending emails:', error);
     // Handle errors
