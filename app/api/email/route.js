@@ -99,7 +99,8 @@ export async function GET(req, res) {
     if(response.ok) {
       // Emails sent successfully
     return new NextResponse('Success', {status: 200 })
-    }
-    // Handle errors
+    } else {
+      // Handle errors
     return new NextResponse('Failed to send emails', { status: 500 });
+    }
 }
