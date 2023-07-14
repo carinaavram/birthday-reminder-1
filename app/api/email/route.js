@@ -5,7 +5,7 @@ import User from '@/models/user';
 import Birthday from '@/models/birthday';
 import sendgrid from '@sendgrid/mail';
 
-sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
+sendgrid.setApiKey(`${process.env.SENDGRID_API_KEY}`);
 
 // Function to retrieve email data
 // async function getEmailData() {
