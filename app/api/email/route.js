@@ -74,7 +74,7 @@ sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 //   }
 // }
 
-async function handler(req, NextResponse) {
+async function handler(req, res) {
   // const emailDataPromise = getEmailData();
   // const timeoutPromise = new Promise((resolve) =>
   //   setTimeout(resolve, 10000, null) // Resolves the promise after 10 seconds
