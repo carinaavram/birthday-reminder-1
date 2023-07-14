@@ -74,7 +74,7 @@ sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 //   }
 // }
 
-export async function GET(req, res) {
+async function handler(req, NextResponse) {
   // const emailDataPromise = getEmailData();
   // const timeoutPromise = new Promise((resolve) =>
   //   setTimeout(resolve, 10000, null) // Resolves the promise after 10 seconds
@@ -88,15 +88,13 @@ export async function GET(req, res) {
   //     JSON.stringify({ message: 'Timeout occurred', status: 500 })
   //   );
   // }
-  const response = await sendgrid.send({
+  await sendgrid.send({
     to: 'carinaavram97@gmail.com',
     from: process.env.MY_EMAIL,
     subject: 'Test Email',
     html: '<h1>This is a test</h1>',
   });
-  if (response.error) {
-    return new NextResponse('Failed to sent emails!', { status: 500 });
-  } else {
-    return new NextResponse('Success', { status: 200 });
-  }
+  return new NextResponse('success', {status: 200});
 }
+
+export {handler as GET};
