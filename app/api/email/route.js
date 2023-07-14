@@ -92,7 +92,7 @@ export async function GET(req, res) {
 
     await sendgrid.send({
       to: 'carinaavram97@gmail.com',
-      from: `${process.env.MY_EMAIL}`,
+      from: process.env.MY_EMAIL,
       subject: 'Test Email',
       html: '<h1>This is a test</h1>'
     });
