@@ -64,7 +64,7 @@ export async function GET(req, res) {
             </html>
             `,
         });
-        if (response.ok) {
+        if (!response.error) {
           return new NextResponse('Success' , {status: 200});
         } else {
           return new NextResponse('Failed', {status: 500})
