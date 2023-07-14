@@ -85,7 +85,7 @@ async function handler(req, res) {
   //   subject: 'Test Email',
   //   html: '<h1>This is a test</h1>',
   // });
-  if (!response.ok){
+  if (!response.error){
     return new NextResponse('Failed to send emails', {status: 500});
   } else {
     return new NextResponse('Emails sent succesfully', {status: 200})
