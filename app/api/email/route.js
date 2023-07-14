@@ -98,7 +98,7 @@ export async function GET(req, res) {
 
     if(response.ok) {
       // Emails sent successfully
-    return new NextResponse(JSON.stringify(response), {status: 200 })
+    return new NextResponse('Success', {status: 200 })
     }
     // Handle errors
     return new NextResponse('Failed to send emails', { status: 500 });
