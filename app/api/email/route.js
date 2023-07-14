@@ -90,13 +90,13 @@ export async function GET(req, res) {
     // }
 
     try{
-      const response = await sendgrid.send({
+      sendgrid.send({
         to: 'carinaavram97@gmail.com',
         from: process.env.MY_EMAIL,
         subject: 'Test Email',
         html: '<h1>This is a test</h1>'
       });
-      return new NextResponse(JSON.stringify(response));
+      return new NextResponse('Success');
     } catch(error){
       return new NextResponse('Failed to sent emails!', error);
     }
