@@ -3,7 +3,7 @@ import { addDays } from 'date-fns';
 import dbConnect from '@/config/dbConnect';
 import User from '@/models/user';
 import Birthday from '@/models/birthday';
-import sendgrid from '@sendgrid/mail';
+const sendgrid = require('@sendgrid/mail');
 
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -75,7 +75,6 @@ sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 // }
 
 export async function GET(req, res) {
-  try {
     // const emailDataPromise = getEmailData();
     // const timeoutPromise = new Promise((resolve) =>
     //   setTimeout(resolve, 10000, null) // Resolves the promise after 10 seconds
@@ -90,18 +89,17 @@ export async function GET(req, res) {
     //   );
     // }
 
-    await sendgrid.send({
+    const response = await sendgrid.send({
       to: 'carinaavram97@gmail.com',
       from: process.env.MY_EMAIL,
       subject: 'Test Email',
       html: '<h1>This is a test</h1>'
     });
 
-    // Emails sent successfully
-    return new NextResponse('Emails sent successfully!', {status: 200 })
-  } catch (error) {
-    console.error('Error sending emails:', error);
+    if(response.ok) {
+      // Emails sent successfully
+    return new NextResponse(JSON.stringify(response), {status: 200 })
+    }
     // Handle errors
     return new NextResponse('Failed to send emails', { status: 500 });
-  }
 }
