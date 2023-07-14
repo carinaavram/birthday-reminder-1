@@ -25,7 +25,6 @@ export async function GET(req, res) {
       ) {
         const formattedDate = birthdayDate.toLocaleDateString('en-US', {
           weekday: 'long',
-          year: 'numeric',
           month: 'short',
           day: 'numeric',
         });
