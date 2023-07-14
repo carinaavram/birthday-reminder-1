@@ -40,16 +40,24 @@ export async function GET(req, res) {
               <head>
                 <style>
                   body {
-                    font-family: Arial, sans-serif;
                     background-color: #whitesmoke;
                     color: #333;
                   }
                   h1 {
-                    color: #ff5500;
+                    color: #F87474;
+                    font-size: 24px;
+                    margin-bottom: 16px;
                   }
                   p {
                     font-size: 16px;
                     line-height: 1.5;
+                    margin-bottom: 12px;
+                    color: #187498;
+                  }
+                  .signature {
+                    font-size: 14px;
+                    color: #888;
+                    margin-top: 32px;
                   }
                 </style>
               </head>
@@ -60,6 +68,7 @@ export async function GET(req, res) {
                 }'s birthday is coming up on ${formattedDate}.</p>
                 <p>Don't forget to wish ${birthday.name} a happy birthday!</p>
                 <p>Here are some gift ideas: ${birthday.gifts.join(',')}.</p>
+                <p class="signature">Best,<br>The Birthday Reminder team</p>
               </body>
             </html>
             `,
